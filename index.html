@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  />
+  <title>Math Sprout - Multiplication & Division Practice</title>
+  <style>
+    :root {
+      --bg: #f6f8ff;
+      --panel: #ffffff;
+      --panel-soft: #f2f6ff;
+      --text: #24304a;
+      --muted: #6c7795;
+      --primary: #5b7cff;
+      --primary-dark: #4265f0;
+      --accent: #ffb84d;
+      --success: #28b487;
+      --error: #ef5f7a;
+      --shadow: 0 18px 40px rgba(57, 83, 154, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, #ecf1ff 0%, transparent 28%),
+        radial-gradient(circle at left bottom, #fff4df 0%, transparent 25%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 920px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      background: linear-gradient(135deg, #7ea1ff, #5b7cff);
+      color: white;
+      box-shadow: 0 10px 22px rgba(91, 124, 255, 0.25);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    .brand h1 {
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.4;
+      font-size: 0.98rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      background: var(--panel-soft);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+    }
+
+    .pill small {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .screen {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: stretch;
+    }
+
+    .panel-soft {
+      background: linear-gradient(180deg, #ffffff, #f8faff);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid #edf1ff;
+    }
+
+    .welcome-title {
+      font-size: clamp(1.6rem, 4vw, 2.35rem);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .welcome-text {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .feature {
+      background: var(--panel-soft);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .controls-grid,
+    .level-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .level-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .option-btn {
+      border: 2px solid transparent;
+      background: var(--panel-soft);
+      color: var(--text);
+      min-height: 72px;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+      text-align: center;
+    }
+
+    .option-btn:hover,
+    .option-btn:focus-visible {
+      transform: translateY(-2px);
+      border-color: #bfd0ff;
+      outline: none;
+    }
+
+    .option-btn.active {
+      background: linear-gradient(180deg, #edf2ff, #e2eaff);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      box-shadow: 0 10px 25px rgba(91, 124, 255, 0.15);
+    }
+
+    .option-btn.locked {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .option-title {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .option-note {
+      display: block;
+      font-size: 0.82rem;
+      margin-top: 6px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .cta-row,
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      min-height: 48px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.18s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 10px 22px rgba(91, 124, 255, 0.25);
+    }
+
+    .btn-secondary {
+      background: var(--panel-soft);
+      color: var(--text);
+    }
+
+    .btn-success {
+      background: linear-gradient(180deg, #35c699, #24a67d);
+      color: white;
+      box-shadow: 0 10px 22px rgba(40, 180, 135, 0.2);
+    }
+
+    .mini-card-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      margin-top: 14px;
+    }
+
+    .mini-card {
+      background: var(--panel-soft);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 1.6rem;
+      margin-top: 6px;
+    }
+
+    .mini-card span {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .practice-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+    }
+
+    .question-box {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 16px;
+      background: #eaf0ff;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7fa2ff, #5b7cff);
+      transition: width 0.25s ease;
+    }
+
+    .question-type {
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .question-text {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      padding: 16px 10px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border-radius: 22px;
+      border: 1px solid #edf1ff;
+    }
+
+    .answer-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .answer-input {
+      flex: 1 1 220px;
+      min-height: 58px;
+      border-radius: 18px;
+      border: 2px solid #dbe4ff;
+      background: white;
+      padding: 14px 16px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .answer-input:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(91, 124, 255, 0.12);
+    }
+
+    .feedback-box {
+      min-height: 84px;
+      border-radius: 18px;
+      padding: 16px;
+      background: var(--panel-soft);
+      display: grid;
+      align-content: center;
+      gap: 8px;
+    }
+
+    .feedback-message {
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .feedback-message.success {
+      color: var(--success);
+    }
+
+    .feedback-message.error {
+      color: var(--error);
+    }
+
+    .feedback-help {
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .score-card {
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 1px solid #edf1ff;
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .score-big {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-top: 6px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .stars {
+      font-size: 1.6rem;
+      letter-spacing: 4px;
+      margin-top: 6px;
+      min-height: 32px;
+    }
+
+    .encouragement {
+      font-weight: 800;
+      line-height: 1.5;
+      color: var(--text);
+      margin-top: 6px;
+    }
+
+    .summary-screen {
+      text-align: center;
+      display: grid;
+      gap: 18px;
+    }
+
+    .summary-score {
+      font-size: clamp(2.1rem, 6vw, 3.6rem);
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+
+    .summary-note {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: var(--panel-soft);
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 800;
+    }
+
+    .footer-tip {
+      color: var(--muted);
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .practice-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .controls-grid,
+      .level-grid,
+      .mini-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .question-box {
+        padding: 18px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .brand {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="topbar">
+      <div class="brand">
+        <div class="brand-icon">🌟</div>
+        <div>
+          <h1>Math Sprout</h1>
+          <p class="subtitle">Friendly multiplication and division practice for kids.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="pill"><span>🔥</span> <span id="globalStreak">0</span> <small>streak</small></div>
+        <div class="pill"><span>⭐</span> <span id="globalStars">0</span> <small>stars</small></div>
+        <div class="pill"><span>🏆</span> <span id="globalBest">0%</span> <small>best</small></div>
+      </div>
+    </section>
+
+    <section id="startScreen" class="screen">
+      <div class="hero">
+        <div class="card">
+          <h2 class="welcome-title">Practice math in short, happy sessions.</h2>
+          <p class="welcome-text">
+            This MVP is designed for 10-year-olds: simple questions, quick feedback,
+            confidence-building progress, and no clutter.
+          </p>
+
+          <div class="feature-list">
+            <div class="feature">✖️ Multiplication practice</div>
+            <div class="feature">➗ Division practice</div>
+            <div class="feature">💬 Gentle feedback and hints</div>
+            <div class="feature">🎯 10 questions per round</div>
+          </div>
+
+          <div class="cta-row">
+            <button id="startNowBtn" class="btn btn-primary">Start practicing</button>
+            <button id="resetProgressBtn" class="btn btn-secondary">Reset progress</button>
+          </div>
+        </div>
+
+        <div class="panel-soft">
+          <h3>Progress so far</h3>
+          <div class="mini-card-grid">
+            <div class="mini-card">
+              <span>Total rounds</span>
+              <strong id="totalRounds">0</strong>
+            </div>
+            <div class="mini-card">
+              <span>Total correct</span>
+              <strong id="totalCorrect">0</strong>
+            </div>
+            <div class="mini-card">
+              <span>Unlocked level</span>
+              <strong id="unlockedLevel">Easy</strong>
+            </div>
+            <div class="mini-card">
+              <span>Best streak</span>
+              <strong id="bestStreak">0</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Choose practice type</h2>
+        <p class="subtitle">Pick one mode and one level, then begin a 10-question session.</p>
+
+        <div class="controls-grid" id="modeButtons">
+          <button class="option-btn active" data-mode="mixed">
+            <span class="option-title">Mixed</span>
+            <span class="option-note">Multiply and divide</span>
+          </button>
+          <button class="option-btn" data-mode="multiplication">
+            <span class="option-title">Multiplication</span>
+            <span class="option-note">Times tables practice</span>
+          </button>
+          <button class="option-btn" data-mode="division">
+            <span class="option-title">Division</span>
+            <span class="option-note">Simple division facts</span>
+          </button>
+        </div>
+
+        <h2 style="margin-top: 22px;">Choose difficulty</h2>
+        <p class="subtitle">Levels unlock as confidence grows.</p>
+
+        <div class="level-grid" id="levelButtons">
+          <button class="option-btn active" data-level="easy">
+            <span class="option-title">Easy</span>
+            <span class="option-note">Numbers up to 5</span>
+          </button>
+          <button class="option-btn locked" data-level="medium">
+            <span class="option-title">Medium</span>
+            <span class="option-note">Numbers up to 10</span>
+          </button>
+          <button class="option-btn locked" data-level="hard">
+            <span class="option-title">Hard</span>
+            <span class="option-note">Bigger facts</span>
+          </button>
+        </div>
+
+        <div class="cta-row">
+          <button id="beginSessionBtn" class="btn btn-success">Begin 10-question game</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="practiceScreen" class="screen hidden">
+      <div class="practice-layout">
+        <div class="card question-box">
+          <div class="progress-row">
+            <div class="question-type" id="questionTypeLabel">Multiplication</div>
+            <div class="label" id="questionCounterLabel">Question 1 of 10</div>
+          </div>
+
+          <div class="progress-wrap" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+
+          <div class="question-text" id="questionText">3 × 4 = ?</div>
+
+          <form id="answerForm" class="answer-row" autocomplete="off">
+            <input
+              id="answerInput"
+              class="answer-input"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              type="text"
+              placeholder="Type your answer"
+              aria-label="Answer"
+            />
+            <button class="btn btn-primary" type="submit">Check</button>
+          </form>
+
+          <div class="button-row">
+            <button id="hintBtn" class="btn btn-secondary" type="button">Show hint</button>
+            <button id="skipBtn" class="btn btn-secondary" type="button">Skip</button>
+            <button id="exitBtn" class="btn btn-secondary" type="button">Exit round</button>
+          </div>
+
+          <div class="feedback-box">
+            <div id="feedbackMessage" class="feedback-message">Let's go! You can do this.</div>
+            <div id="feedbackHelp" class="feedback-help">Answer the question and get stars for correct answers.</div>
+          </div>
+        </div>
+
+        <aside class="side-panel">
+          <div class="score-card">
+            <div class="label">Score</div>
+            <div class="score-big" id="scoreDisplay">0 / 10</div>
+          </div>
+
+          <div class="score-card">
+            <div class="label">Stars this round</div>
+            <div class="score-big" id="starsDisplay">0</div>
+            <div class="stars" id="starsVisual">☆ ☆ ☆</div>
+          </div>
+
+          <div class="score-card">
+            <div class="label">Current streak</div>
+            <div class="score-big" id="roundStreakDisplay">0</div>
+          </div>
+
+          <div class="score-card">
+            <div class="label">Encouragement</div>
+            <p id="encouragementText" class="encouragement">Every question is a chance to learn.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="summaryScreen" class="card summary-screen hidden">
+      <div style="font-size: 3rem;">🎉</div>
+      <h2>Round complete!</h2>
+      <div id="summaryScore" class="summary-score">8 / 10</div>
+      <p id="summaryText" class="summary-note"></p>
+
+      <div class="badge-row">
+        <div class="badge" id="summaryAccuracy">Accuracy: 0%</div>
+        <div class="badge" id="summaryStars">Stars earned: 0</div>
+        <div class="badge" id="summaryLevel">Level: Easy</div>
+      </div>
+
+      <div class="button-row" style="justify-content: center;">
+        <button id="playAgainBtn" class="btn btn-primary">Play again</button>
+        <button id="backHomeBtn" class="btn btn-secondary">Back to home</button>
+      </div>
+    </section>
+
+    <p class="footer-tip">
+      Tip: this app stores progress in your browser so children can come back later and keep practicing.
+    </p>
+  </main>
+
+  <script>
+    (() => {
+      const SESSION_LENGTH = 10;
+      const STORAGE_KEY = "math-sprout-progress-v1";
+
+      const state = {
+        selectedMode: "mixed",
+        selectedLevel: "easy",
+        unlockedLevels: ["easy"],
+        questions: [],
+        currentIndex: 0,
+        correctCount: 0,
+        stars: 0,
+        roundStreak: 0,
+        currentQuestion: null,
+        usedHint: false,
+        progress: {
+          totalRounds: 0,
+          totalCorrect: 0,
+          totalQuestions: 0,
+          stars: 0,
+          currentStreak: 0,
+          bestStreak: 0,
+          bestAccuracy: 0,
+          unlockedLevel: "easy"
+        }
+      };
+
+      const els = {
+        startScreen: document.getElementById("startScreen"),
+        practiceScreen: document.getElementById("practiceScreen"),
+        summaryScreen: document.getElementById("summaryScreen"),
+
+        modeButtons: [...document.querySelectorAll("#modeButtons .option-btn")],
+        levelButtons: [...document.querySelectorAll("#levelButtons .option-btn")],
+
+        startNowBtn: document.getElementById("startNowBtn"),
+        beginSessionBtn: document.getElementById("beginSessionBtn"),
+        resetProgressBtn: document.getElementById("resetProgressBtn"),
+
+        questionTypeLabel: document.getElementById("questionTypeLabel"),
+        questionCounterLabel: document.getElementById("questionCounterLabel"),
+        progressBar: document.getElementById("progressBar"),
+        questionText: document.getElementById("questionText"),
+        answerForm: document.getElementById("answerForm"),
+        answerInput: document.getElementById("answerInput"),
+        hintBtn: document.getElementById("hintBtn"),
+        skipBtn: document.getElementById("skipBtn"),
+        exitBtn: document.getElementById("exitBtn"),
+        feedbackMessage: document.getElementById("feedbackMessage"),
+        feedbackHelp: document.getElementById("feedbackHelp"),
+        scoreDisplay: document.getElementById("scoreDisplay"),
+        starsDisplay: document.getElementById("starsDisplay"),
+        starsVisual: document.getElementById("starsVisual"),
+        roundStreakDisplay: document.getElementById("roundStreakDisplay"),
+        encouragementText: document.getElementById("encouragementText"),
+
+        summaryScore: document.getElementById("summaryScore"),
+        summaryText: document.getElementById("summaryText"),
+        summaryAccuracy: document.getElementById("summaryAccuracy"),
+        summaryStars: document.getElementById("summaryStars"),
+        summaryLevel: document.getElementById("summaryLevel"),
+        playAgainBtn: document.getElementById("playAgainBtn"),
+        backHomeBtn: document.getElementById("backHomeBtn"),
+
+        globalStreak: document.getElementById("globalStreak"),
+        globalStars: document.getElementById("globalStars"),
+        globalBest: document.getElementById("globalBest"),
+        totalRounds: document.getElementById("totalRounds"),
+        totalCorrect: document.getElementById("totalCorrect"),
+        unlockedLevel: document.getElementById("unlockedLevel"),
+        bestStreak: document.getElementById("bestStreak")
+      };
+
+      const encouragements = [
+        "Every question is a chance to learn.",
+        "Nice and steady wins the game.",
+        "You are building a strong math brain!",
+        "Try your best. That's what matters.",
+        "Mistakes help us grow smarter.",
+        "You’ve got this!",
+        "One step at a time works great."
+      ];
+
+      const praise = [
+        "Amazing work!",
+        "Great job!",
+        "Nice thinking!",
+        "You got it!",
+        "Excellent!",
+        "Brilliant!",
+        "Super work!"
+      ];
+
+      const gentleCorrections = [
+        "Not quite, but you are learning.",
+        "Good try. Let's look at it together.",
+        "Almost there. Keep going!",
+        "That one was tricky. Try the next one!",
+        "Learning moment! You can do the next one."
+      ];
+
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const saved = JSON.parse(raw);
+
+          state.progress = {
+            ...state.progress,
+            ...saved
+          };
+
+          state.unlockedLevels = getUnlockedLevelsFromProgress(state.progress.unlockedLevel);
+        } catch (error) {
+          console.error("Failed to load progress:", error);
+        }
+      }
+
+      function saveProgress() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress));
+      }
+
+      function getUnlockedLevelsFromProgress(highestUnlocked) {
+        if (highestUnlocked === "hard") return ["easy", "medium", "hard"];
+        if (highestUnlocked === "medium") return ["easy", "medium"];
+        return ["easy"];
+      }
+
+      function updateHomeStats() {
+        els.globalStreak.textContent = String(state.progress.currentStreak);
+        els.globalStars.textContent = String(state.progress.stars);
+        els.globalBest.textContent = `${state.progress.bestAccuracy}%`;
+
+        els.totalRounds.textContent = String(state.progress.totalRounds);
+        els.totalCorrect.textContent = String(state.progress.totalCorrect);
+        els.unlockedLevel.textContent =
+          state.progress.unlockedLevel.charAt(0).toUpperCase() +
+          state.progress.unlockedLevel.slice(1);
+        els.bestStreak.textContent = String(state.progress.bestStreak);
+      }
+
+      function refreshModeButtons() {
+        els.modeButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.mode === state.selectedMode);
+        });
+      }
+
+      function refreshLevelButtons() {
+        const unlocked = new Set(state.unlockedLevels);
+
+        els.levelButtons.forEach((btn) => {
+          const level = btn.dataset.level;
+          const isUnlocked = unlocked.has(level);
+          btn.classList.toggle("locked", !isUnlocked);
+          btn.classList.toggle("active", level === state.selectedLevel);
+
+          const note = btn.querySelector(".option-note");
+          if (!isUnlocked && note) {
+            if (level === "medium") {
+              note.textContent = "Unlock at 70% on Easy";
+            } else if (level === "hard") {
+              note.textContent = "Unlock at 75% on Medium";
+            }
+          } else if (note) {
+            if (level === "easy") note.textContent = "Numbers up to 5";
+            if (level === "medium") note.textContent = "Numbers up to 10";
+            if (level === "hard") note.textContent = "Bigger facts";
+          }
+        });
+
+        if (!unlocked.has(state.selectedLevel)) {
+          state.selectedLevel = "easy";
+          els.levelButtons.forEach((btn) => {
+            btn.classList.toggle("active", btn.dataset.level === "easy");
+          });
+        }
+      }
+
+      function showScreen(name) {
+        els.startScreen.classList.add("hidden");
+        els.practiceScreen.classList.add("hidden");
+        els.summaryScreen.classList.add("hidden");
+
+        if (name === "start") els.startScreen.classList.remove("hidden");
+        if (name === "practice") els.practiceScreen.classList.remove("hidden");
+        if (name === "summary") els.summaryScreen.classList.remove("hidden");
+      }
+
+      function randint(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function chooseRandom(array) {
+        return array[Math.floor(Math.random() * array.length)];
+      }
+
+      function generateQuestion(mode, level) {
+        const actualMode = mode === "mixed"
+          ? chooseRandom(["multiplication", "division"])
+          : mode;
+
+        let a, b, answer, text, hint;
+
+        if (actualMode === "multiplication") {
+          if (level === "easy") {
+            a = randint(1, 5);
+            b = randint(1, 5);
+          } else if (level === "medium") {
+            a = randint(2, 10);
+            b = randint(2, 10);
+          } else {
+            a = randint(3, 12);
+            b = randint(4, 12);
+          }
+
+          answer = a * b;
+          text = `${a} × ${b} = ?`;
+          hint = `${a} groups of ${b} make ${answer}.`;
+        } else {
+          if (level === "easy") {
+            b = randint(1, 5);
+            answer = randint(1, 5);
+          } else if (level === "medium") {
+            b = randint(2, 10);
+            answer = randint(2, 10);
+          } else {
+            b = randint(3, 12);
+            answer = randint(3, 12);
+          }
+
+          a = b * answer;
+          text = `${a} ÷ ${b} = ?`;
+          hint = `${a} split into ${b} equal groups gives ${answer} in each group.`;
+        }
+
+        return {
+          mode: actualMode,
+          a,
+          b,
+          answer,
+          text,
+          hint
+        };
+      }
+
+      function generateSessionQuestions() {
+        const questions = [];
+        const seen = new Set();
+
+        while (questions.length < SESSION_LENGTH) {
+          const q = generateQuestion(state.selectedMode, state.selectedLevel);
+          const key = `${q.mode}-${q.text}`;
+          if (!seen.has(key)) {
+            seen.add(key);
+            questions.push(q);
+          }
+        }
+
+        state.questions = questions;
+      }
+
+      function startSession() {
+        generateSessionQuestions();
+        state.currentIndex = 0;
+        state.correctCount = 0;
+        state.stars = 0;
+        state.roundStreak = 0;
+        state.usedHint = false;
+        state.currentQuestion = state.questions[0];
+
+        updatePracticeUI(true);
+        setFeedback("Let's go! You can do this.", "Answer the question and get stars for correct answers.", "");
+        showScreen("practice");
+        els.answerInput.focus();
+      }
+
+      function updatePracticeUI(resetInput = false) {
+        const q = state.currentQuestion;
+        const progressPercent = (state.currentIndex / SESSION_LENGTH) * 100;
+
+        els.questionTypeLabel.textContent =
+          q.mode === "multiplication" ? "Multiplication" : "Division";
+        els.questionCounterLabel.textContent =
+          `Question ${state.currentIndex + 1} of ${SESSION_LENGTH}`;
+        els.progressBar.style.width = `${progressPercent}%`;
+        els.questionText.textContent = q.text;
+        els.scoreDisplay.textContent = `${state.correctCount} / ${SESSION_LENGTH}`;
+        els.starsDisplay.textContent = String(state.stars);
+        els.roundStreakDisplay.textContent = String(state.roundStreak);
+        els.encouragementText.textContent = chooseRandom(encouragements);
+        els.starsVisual.textContent = renderStarText(state.stars);
+
+        if (resetInput) {
+          els.answerInput.value = "";
+        }
+      }
+
+      function renderStarText(count) {
+        const full = "★".repeat(Math.min(count, 3));
+        const empty = "☆".repeat(Math.max(0, 3 - Math.min(count, 3)));
+        return [full, empty].join(" ").trim() || "☆ ☆ ☆";
+      }
+
+      function setFeedback(message, help, type) {
+        els.feedbackMessage.textContent = message;
+        els.feedbackHelp.textContent = help;
+        els.feedbackMessage.classList.remove("success", "error");
+        if (type) {
+          els.feedbackMessage.classList.add(type);
+        }
+      }
+
+      function getSubmittedValue() {
+        const raw = els.answerInput.value.trim();
+        if (!/^-?\d+$/.test(raw)) return null;
+        return Number(raw);
+      }
+
+      function handleAnswerSubmit(event) {
+        event.preventDefault();
+        const submitted = getSubmittedValue();
+
+        if (submitted === null) {
+          setFeedback("Please type a number.", "Use digits like 12 or 8.", "error");
+          return;
+        }
+
+        const q = state.currentQuestion;
+        const correct = submitted === q.answer;
+
+        if (correct) {
+          state.correctCount += 1;
+          state.roundStreak += 1;
+          state.stars += state.usedHint ? 1 : 2;
+
+          setFeedback(
+            chooseRandom(praise),
+            `${q.text.replace("?", q.answer)} Nice work!`,
+            "success"
+          );
+        } else {
+          state.roundStreak = 0;
+          setFeedback(
+            chooseRandom(gentleCorrections),
+            `${q.text.replace("?", q.answer)} Remember: ${q.hint}`,
+            "error"
+          );
+        }
+
+        nextQuestion();
+      }
+
+      function showHint() {
+        state.usedHint = true;
+        setFeedback("Here is a hint 💡", state.currentQuestion.hint, "");
+      }
+
+      function skipQuestion() {
+        const q = state.currentQuestion;
+        state.roundStreak = 0;
+        setFeedback(
+          "Skipped.",
+          `${q.text.replace("?", q.answer)} Next one!`,
+          "error"
+        );
+        nextQuestion();
+      }
+
+      function nextQuestion() {
+        updatePracticeUI(false);
+
+        setTimeout(() => {
+          state.currentIndex += 1;
+
+          if (state.currentIndex >= SESSION_LENGTH) {
+            finishSession();
+            return;
+          }
+
+          state.currentQuestion = state.questions[state.currentIndex];
+          state.usedHint = false;
+          updatePracticeUI(true);
+          els.answerInput.focus();
+        }, 700);
+      }
+
+      function maybeUnlockNextLevel(accuracyPercent) {
+        const current = state.selectedLevel;
+        const progress = state.progress;
+
+        if (current === "easy" && accuracyPercent >= 70) {
+          progress.unlockedLevel = progress.unlockedLevel === "hard" ? "hard" : "medium";
+        }
+
+        if (current === "medium" && accuracyPercent >= 75) {
+          progress.unlockedLevel = "hard";
+        }
+
+        state.unlockedLevels = getUnlockedLevelsFromProgress(progress.unlockedLevel);
+      }
+
+      function finishSession() {
+        const accuracy = Math.round((state.correctCount / SESSION_LENGTH) * 100);
+
+        state.progress.totalRounds += 1;
+        state.progress.totalCorrect += state.correctCount;
+        state.progress.totalQuestions += SESSION_LENGTH;
+        state.progress.stars += state.stars;
+        state.progress.currentStreak = state.correctCount >= 7
+          ? state.progress.currentStreak + 1
+          : 0;
+        state.progress.bestStreak = Math.max(state.progress.bestStreak, state.progress.currentStreak);
+        state.progress.bestAccuracy = Math.max(state.progress.bestAccuracy, accuracy);
+
+        maybeUnlockNextLevel(accuracy);
+        saveProgress();
+        updateHomeStats();
+        refreshLevelButtons();
+
+        els.summaryScore.textContent = `${state.correctCount} / ${SESSION_LENGTH}`;
+        els.summaryAccuracy.textContent = `Accuracy: ${accuracy}%`;
+        els.summaryStars.textContent = `Stars earned: ${state.stars}`;
+        els.summaryLevel.textContent = `Level: ${capitalize(state.selectedLevel)}`;
+        els.summaryText.textContent = buildSummaryMessage(accuracy, state.correctCount, state.selectedLevel);
+
+        showScreen("summary");
+      }
+
+      function buildSummaryMessage(accuracy, correct, level) {
+        const levelWord = capitalize(level);
+
+        if (accuracy === 100) {
+          return `Perfect score on ${levelWord}! Fantastic job. You answered every question correctly and showed strong confidence.`;
+        }
+
+        if (accuracy >= 80) {
+          return `Great round! You got ${correct} correct and are building strong ${level.toLowerCase()} math skills. Keep practicing to make it even easier.`;
+        }
+
+        if (accuracy >= 60) {
+          return `Nice effort. You are learning well and getting stronger with repetition. Another short round will help the facts stick.`;
+        }
+
+        return `Good practice session. Some questions were tricky, and that is okay. Short, regular practice helps math feel easier over time.`;
+      }
+
+      function capitalize(value) {
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
+
+      function resetProgress() {
+        localStorage.removeItem(STORAGE_KEY);
+        state.progress = {
+          totalRounds: 0,
+          totalCorrect: 0,
+          totalQuestions: 0,
+          stars: 0,
+          currentStreak: 0,
+          bestStreak: 0,
+          bestAccuracy: 0,
+          unlockedLevel: "easy"
+        };
+        state.unlockedLevels = ["easy"];
+        state.selectedLevel = "easy";
+        saveProgress();
+        updateHomeStats();
+        refreshLevelButtons();
+      }
+
+      function attachEvents() {
+        els.modeButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            state.selectedMode = btn.dataset.mode;
+            refreshModeButtons();
+          });
+        });
+
+        els.levelButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const level = btn.dataset.level;
+            if (!state.unlockedLevels.includes(level)) return;
+            state.selectedLevel = level;
+            refreshLevelButtons();
+          });
+        });
+
+        els.startNowBtn.addEventListener("click", () => {
+          document.querySelector(".card:last-of-type")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        els.beginSessionBtn.addEventListener("click", startSession);
+        els.answerForm.addEventListener("submit", handleAnswerSubmit);
+        els.hintBtn.addEventListener("click", showHint);
+        els.skipBtn.addEventListener("click", skipQuestion);
+
+        els.exitBtn.addEventListener("click", () => {
+          showScreen("start");
+        });
+
+        els.playAgainBtn.addEventListener("click", startSession);
+        els.backHomeBtn.addEventListener("click", () => showScreen("start"));
+
+        els.resetProgressBtn.addEventListener("click", () => {
+          const confirmed = window.confirm("Reset all progress, stars, and unlocked levels?");
+          if (confirmed) {
+            resetProgress();
+          }
+        });
+
+        els.answerInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") return;
+        });
+      }
+
+      function init() {
+        loadProgress();
+        updateHomeStats();
+        refreshModeButtons();
+        refreshLevelButtons();
+        attachEvents();
+        showScreen("start");
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
